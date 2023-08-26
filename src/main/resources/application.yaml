@@ -1,0 +1,8 @@
+quarkus:
+  info:
+    enabled: true
+    build:
+      build-number: 123
+      user: ${USER}
+    git:
+      mode: full
