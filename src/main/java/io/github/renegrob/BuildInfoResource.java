@@ -24,16 +24,12 @@ public class BuildInfoResource {
     public static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("uuuu-MM-dd-HH:mm:ss.SSS z");
     private final Logger logger;
     private final BuildInfo buildInfo;
-    private final OsInfo osInfo;
-    private final JavaInfo javaInfo;
     private final GitInfo gitInfo;
 
     @Inject
     public BuildInfoResource(Logger logger, BuildInfo buildInfo, OsInfo osInfo, JavaInfo javaInfo, GitInfo gitInfo) {
         this.logger = logger;
         this.buildInfo = buildInfo;
-        this.osInfo = osInfo;
-        this.javaInfo = javaInfo;
         this.gitInfo = gitInfo;
     }
 
@@ -44,8 +40,8 @@ public class BuildInfoResource {
         sb.append(formatLine("{}:{} version {}, build-time: {}",
                 buildInfo.group(), buildInfo.artifact(), buildInfo.version(),
                 formatDate(buildInfo.time())));
-        sb.append(formatLine("Built on OS: {} version {} on {}", osInfo.name(), osInfo.version(), osInfo.architecture()));
-        sb.append(formatLine("Built with java: {}", javaInfo.version()));
+//        sb.append(formatLine("Built on OS: {} version {} on {}", osInfo.name(), osInfo.version(), osInfo.architecture()));
+//        sb.append(formatLine("Built with java: {}", javaInfo.version()));
         sb.append(formatLine("Git Info: Commit {} on branch {} at {}", gitInfo.latestCommitId(), gitInfo.branch(), formatDate(gitInfo.commitTime())));
         return sb.toString();
     }

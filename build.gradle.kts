@@ -11,8 +11,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 val quarkusPlatformGroupId: String by project

@@ -2,7 +2,11 @@ quarkus:
   info:
     enabled: true
     build:
-      build-number: 123
-      user: ${USER}
+      build-number: ${BUILD_NUMBER:999}
+      jdk: ${java.version} (${java.vendor})
+      os:
+        name: ${os.name}
+        version: ${os.version}
+        architecture: ${os.arch}
     git:
       mode: full

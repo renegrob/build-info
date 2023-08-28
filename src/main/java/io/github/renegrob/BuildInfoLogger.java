@@ -16,18 +16,17 @@ public class BuildInfoLogger {
 
     public static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("uuuu-MM-dd-HH:mm:ss.SSS z");
     private final Logger logger;
+
     private final BuildInfo buildInfo;
-    private final OsInfo osInfo;
-    private final JavaInfo javaInfo;
     private final GitInfo gitInfo;
+    private final BuildInfoConfiguration buildInfoConfig;
 
     @Inject
-    public BuildInfoLogger(Logger logger, BuildInfo buildInfo, OsInfo osInfo, JavaInfo javaInfo, GitInfo gitInfo) {
+    public BuildInfoLogger(Logger logger, BuildInfo buildInfo, GitInfo gitInfo, BuildInfoConfiguration buildInfoConfig) {
         this.logger = logger;
         this.buildInfo = buildInfo;
-        this.osInfo = osInfo;
-        this.javaInfo = javaInfo;
         this.gitInfo = gitInfo;
+        this.buildInfoConfig = buildInfoConfig;
     }
 
     @Startup
@@ -35,8 +34,8 @@ public class BuildInfoLogger {
         logger.info("{}:{} version {}, build-time: {}",
                 buildInfo.group(), buildInfo.artifact(), buildInfo.version(),
                 formatDate(buildInfo.time()));
-        logger.info("Built on OS: {} version {} on {}", osInfo.name(), osInfo.version(), osInfo.architecture());
-        logger.info("Built with java: {}", javaInfo.version());
+        logger.info("Built on OS: {} version {} on {}", buildInfoConfig.os().name(), buildInfoConfig.os().version(), buildInfoConfig.os().architecture());
+        logger.info("Built with: {}", buildInfoConfig.jdk());
         logger.info("Git Info: Commit {} on branch {} at {}", gitInfo.latestCommitId(), gitInfo.branch(), formatDate(gitInfo.commitTime()));
     }
 
